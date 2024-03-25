@@ -7,7 +7,7 @@ Fikri Ihsan Fadhiilah (1957356840-296)
 
 ## Comment
 
-![](assets/comments.png)
+![](assets/comment.png)
 
 ## Social Media and Photos
 
