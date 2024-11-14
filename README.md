@@ -1,7 +1,5 @@
 # Final Project 2 - MyGram App
 
-Fikri Ihsan Fadhiilah (1957356840-296)
-
 # Swagger UI
 
 ## Comment
