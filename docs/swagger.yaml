@@ -1,3 +1,4 @@
+basePath: /API/v1
 definitions:
   dto.GetCommentResponse:
     properties:
@@ -9,10 +10,37 @@ definitions:
     type: object
   dto.GetPhotoResponse:
     properties:
-      data: {}
+      data:
+        items:
+          $ref: '#/definitions/dto.GetPhotoResponseData'
+        type: array
       message:
         type: string
       status_code:
+        type: integer
+    type: object
+  dto.GetPhotoResponseData:
+    properties:
+      caption:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      photo_url:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user:
+        properties:
+          email:
+            type: string
+          username:
+            type: string
+        type: object
+      user_id:
         type: integer
     type: object
   dto.GetSocialMedia:
@@ -160,17 +188,12 @@ definitions:
         example: secret
         type: string
     type: object
-  dto.UserUpdateRequest:
-    properties:
-      email:
-        example: monday.day@weeekly.com
-        type: string
-      username:
-        example: monday
-        type: string
-    type: object
+host: localhost:8080
 info:
   contact: {}
+  description: Final Project 1
+  title: MyGram App
+  version: "1.0"
 paths:
   /comments:
     get:
@@ -466,29 +489,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Create new User
-      tags:
-      - Users
-    put:
-      consumes:
-      - application/json
-      description: User update
-      parameters:
-      - description: body request for user update
-        in: body
-        name: dto.UserUpdateRequest
-        required: true
-        schema:
-          $ref: '#/definitions/dto.UserUpdateRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.GetUserResponse'
-      security:
-      - BearerAuth: []
-      summary: User update
       tags:
       - Users
   /users/login:

@@ -22,13 +22,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title MyGram App
-// @version 1.0
-// @description Final Project 1 Kominfo
-
-// @host localhost:8080
-// @BasePath /
-
 func StartApp() {
 
 	config.LoadEnv()
