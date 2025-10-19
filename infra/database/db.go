@@ -149,7 +149,6 @@ func handleRequiredTables() {
 		log.Panic("error while creating comments table: ", err.Error())
 		return
 	}
-
 }
 
 func InitializeDatabase() {
