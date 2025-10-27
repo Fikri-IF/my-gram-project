@@ -94,7 +94,6 @@ func (u *userHandlerImpl) Login(ctx *gin.Context) {
 // @Success 200 {object} dto.GetUserResponse
 // @Router /users [put]
 // @Security BearerAuth
-
 func (u *userHandlerImpl) Update(ctx *gin.Context) {
 	user, ok := ctx.MustGet("userData").(entity.User)
 
@@ -124,8 +123,8 @@ func (u *userHandlerImpl) Update(ctx *gin.Context) {
 }
 
 // Delete godoc
-// @Summary Create new User
-// @Description Create new Users
+// @Summary Delete Current User
+// @Description Delete Current User
 // @Tags Users
 // @Accept json
 // @Produce json

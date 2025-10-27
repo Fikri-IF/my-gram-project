@@ -454,13 +454,13 @@ const docTemplate = `{
             }
         },
         "/users": {
-            "delete": {
+            "put": {
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "description": "Create new Users",
+                "description": "User update",
                 "consumes": [
                     "application/json"
                 ],
@@ -470,7 +470,44 @@ const docTemplate = `{
                 "tags": [
                     "Users"
                 ],
-                "summary": "Create new User",
+                "summary": "User update",
+                "parameters": [
+                    {
+                        "description": "body request for user update",
+                        "name": "dto.UserUpdateRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UserUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.GetUserResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Delete Current User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete Current User",
                 "parameters": [
                     {
                         "type": "string",
@@ -833,6 +870,19 @@ const docTemplate = `{
                     "example": "secret"
                 }
             }
+        },
+        "dto.UserUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "monday.day@weeekly.com"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "monday"
+                }
+            }
         }
     },
     "securityDefinitions": {
@@ -849,7 +899,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",
-	BasePath:         "/API/v1",
+	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "MyGram App",
 	Description:      "Final Project 1",

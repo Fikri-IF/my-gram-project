@@ -52,44 +52,41 @@ func StartApp() {
 	// swagger
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggoFile.Handler))
 
+	// Testin Hello world with auth
+	app.GET("/hello", authService.Authentication(), func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "Hello World!",
+		})
+	})
+
 	// routing
 	users := app.Group("users")
-
 	{
 		users.POST("/register", userHandler.Register)
 		users.POST("/login", userHandler.Login)
 		users.PUT("", authService.Authentication(), userHandler.Update)
 		users.DELETE("", authService.Authentication(), userHandler.Delete)
 	}
-
-	photos := app.Group("photos")
-
+	photos := app.Group("photos", authService.Authentication())
 	{
-
-		photos.Use(authService.Authentication())
-
 		photos.POST("", photoHandler.AddPhoto)
 		photos.GET("", photoHandler.GetPhotos)
 		photos.PUT("/:photoId", authService.AuthorizationPhoto(), photoHandler.UpdatePhoto)
 		photos.DELETE("/:photoId", authService.AuthorizationPhoto(), photoHandler.DeletePhoto)
 	}
-
-	comments := app.Group("comments")
-
+	comments := app.Group("comments", authService.Authentication())
 	{
-		comments.POST("", authService.Authentication(), commentHandler.AddComment)
-		comments.GET("", authService.Authentication(), commentHandler.GetComments)
-		comments.PUT("/:commentId", authService.Authentication(), authService.AuthorizationComment(), commentHandler.UpdateComment)
-		comments.DELETE("/:commentId", authService.Authentication(), authService.AuthorizationComment(), commentHandler.DeleteComment)
+		comments.POST("", commentHandler.AddComment)
+		comments.GET("", commentHandler.GetComments)
+		comments.PUT("/:commentId", authService.AuthorizationComment(), commentHandler.UpdateComment)
+		comments.DELETE("/:commentId", authService.AuthorizationComment(), commentHandler.DeleteComment)
 	}
-
-	socialMedias := app.Group("socialmedias")
-
+	socialMedias := app.Group("socialmedias", authService.Authentication())
 	{
-		socialMedias.POST("", authService.Authentication(), socialMediaHandler.AddSocialMedia)
-		socialMedias.GET("", authService.Authentication(), socialMediaHandler.GetSocialMedias)
-		socialMedias.PUT("/:socialMediaId", authService.Authentication(), authService.AuthorizationSocialMedia(), socialMediaHandler.UpdateSocialMedia)
-		socialMedias.DELETE("/:socialMediaId", authService.Authentication(), authService.AuthorizationSocialMedia(), socialMediaHandler.DeleteSocialMedia)
+		socialMedias.POST("", socialMediaHandler.AddSocialMedia)
+		socialMedias.GET("", socialMediaHandler.GetSocialMedias)
+		socialMedias.PUT("/:socialMediaId", authService.AuthorizationSocialMedia(), socialMediaHandler.UpdateSocialMedia)
+		socialMedias.DELETE("/:socialMediaId", authService.AuthorizationSocialMedia(), socialMediaHandler.DeleteSocialMedia)
 	}
 
 	app.Run(":" + config.AppConfig().Port)

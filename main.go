@@ -10,7 +10,7 @@ import (
 // @description Final Project 1
 
 // @host localhost:8080
-// @BasePath /API/v1
+// @BasePath /
 func main() {
 
 	// @securityDefinitions.apikey BearerAuth
